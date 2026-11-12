@@ -1,9 +1,10 @@
-name: test
+name: ci
 on:
   push:
     branches: [main]
   pull_request:
-  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,5 +13,7 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-      - run: npm install
+          cache: npm
+      - run: npm ci
+      - run: npm run build
       - run: npm test
